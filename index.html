@@ -1,721 +1,1443 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FUNZONE 🎪</title>
-
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
-      }
-
-      body {
-        background: #0b0b16;
-        color: white;
-        transition: 0.3s;
-      }
-
-      body.light {
-        background: #f4f4f8;
-        color: #111;
-      }
-
-      header {
-        height: 70px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 6%;
-        background: #121225;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        box-shadow: 0 3px 20px #0005;
-      }
-
-      .logo {
-        font-size: 25px;
-        font-weight: bold;
-        color: #00eaff;
-      }
-
-      nav {
-        display: flex;
-        gap: 10px;
-      }
-
-      nav button {
-        background: none;
-        border: 0;
-        color: white;
-        padding: 10px;
-        cursor: pointer;
-      }
-
-      .light header,
-      .light nav button {
-        color: #111;
-      }
-
-      nav button:hover {
-        color: #00eaff;
-      }
-
-      .controls {
-        display: flex;
-        gap: 8px;
-      }
-
-      .icon-btn {
-        border: 0;
-        background: #242442;
-        color: white;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        cursor: pointer;
-      }
-
-      .hero {
-        min-height: 430px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 40px 20px;
-        background: radial-gradient(
-            circle at 20% 20%,
-            #7928ca55,
-            transparent 30%
-          ),
-          radial-gradient(circle at 80% 30%, #00eaff44, transparent 30%),
-          linear-gradient(135deg, #0d0d20, #151530);
-      }
-
-      .hero h1 {
-        font-size: 65px;
-        margin-bottom: 15px;
-      }
-
-      .hero h1 span {
-        color: #00eaff;
-      }
-
-      .hero p {
-        font-size: 19px;
-        color: #bbb;
-        max-width: 650px;
-        line-height: 1.6;
-      }
-
-      .main-btn {
-        margin-top: 25px;
-        padding: 15px 30px;
-        border: 0;
-        border-radius: 30px;
-        background: #00eaff;
-        color: #000;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.3s;
-      }
-
-      .main-btn:hover {
-        transform: scale(1.08);
-        box-shadow: 0 0 30px #00eaff77;
-      }
-
-      section {
-        padding: 55px 7%;
-      }
-
-      .title {
-        text-align: center;
-        font-size: 35px;
-        margin-bottom: 35px;
-      }
-
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-        gap: 20px;
-      }
-
-      .card {
-        background: #16162b;
-        padding: 25px;
-        border-radius: 20px;
-        text-align: center;
-        transition: 0.3s;
-        border: 1px solid #ffffff0d;
-      }
-
-      .light .card {
-        background: white;
-        box-shadow: 0 5px 20px #0001;
-      }
-
-      .card:hover {
-        transform: translateY(-8px);
-        border-color: #00eaff;
-      }
-
-      .card .emoji {
-        font-size: 50px;
-        margin-bottom: 15px;
-      }
-
-      .card h3 {
-        margin-bottom: 10px;
-      }
-
-      .card p {
-        color: #999;
-        line-height: 1.5;
-      }
-
-      .card button {
-        margin-top: 15px;
-        padding: 10px 20px;
-        border: 0;
-        border-radius: 20px;
-        background: #29294a;
-        color: white;
-        cursor: pointer;
-      }
-
-      .search-box {
-        width: 100%;
-        max-width: 600px;
-        margin: 0 auto 35px;
-        display: flex;
-      }
-
-      .search-box input {
-        flex: 1;
-        padding: 15px 20px;
-        border: 0;
-        outline: 0;
-        border-radius: 30px 0 0 30px;
-        background: #22223b;
-        color: white;
-      }
-
-      .search-box button {
-        width: 60px;
-        border: 0;
-        background: #00eaff;
-        border-radius: 0 30px 30px 0;
-        cursor: pointer;
-      }
-
-      /* QUIZ */
-
-      .quiz {
-        max-width: 650px;
-        margin: auto;
-        background: #16162b;
-        padding: 30px;
-        border-radius: 25px;
-      }
-
-      .question {
-        font-size: 22px;
-        margin-bottom: 20px;
-      }
-
-      .answer {
-        display: block;
-        width: 100%;
-        padding: 14px;
-        margin: 10px 0;
-        border: 0;
-        border-radius: 12px;
-        background: #252545;
-        color: white;
-        cursor: pointer;
-        text-align: left;
-      }
-
-      .answer:hover {
-        background: #00eaff;
-        color: #000;
-      }
-
-      /* MUSIC */
-
-      .player {
-        max-width: 600px;
-        margin: auto;
-        background: #16162b;
-        padding: 30px;
-        border-radius: 25px;
-        text-align: center;
-      }
-
-      .album {
-        width: 160px;
-        height: 160px;
-        margin: auto;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #00eaff, #7928ca);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 60px;
-      }
-
-      .player h3 {
-        margin: 20px;
-      }
-
-      .music-controls button {
-        margin: 5px;
-        width: 45px;
-        height: 45px;
-        border: 0;
-        border-radius: 50%;
-        cursor: pointer;
-      }
-
-      /* GALLERY */
-
-      .gallery {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 15px;
-      }
-
-      .photo {
-        height: 180px;
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 60px;
-        background: linear-gradient(135deg, #7928ca, #00eaff);
-      }
-
-      /* FOOTER */
-
-      footer {
-        text-align: center;
-        padding: 40px;
-        background: #10101f;
-        color: #888;
-      }
-
-      @media (max-width: 800px) {
-        header {
-          padding: 0 3%;
-        }
-
-        nav {
-          display: none;
-        }
-
-        .hero h1 {
-          font-size: 43px;
-        }
-
-        section {
-          padding: 40px 5%;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <header>
-      <div class="logo">🎪 FUNZONE</div>
-
-      <nav>
-        <button onclick="go('home')">Home</button>
-        <button onclick="go('games')">Games</button>
-        <button onclick="go('music')">Music</button>
-        <button onclick="go('quiz')">Quiz</button>
-        <button onclick="go('funny')">Funny</button>
-      </nav>
-
-      <div class="controls">
-        <button class="icon-btn" onclick="toggleTheme()">🌙</button>
-      </div>
-    </header>
-
-    <!-- HOME -->
-
-    <div id="home">
-      <div class="hero">
-        <h1>Welcome to <span>FUNZONE</span> 🎪</h1>
-
-        <p>
-          Your small entertainment world. Play games, listen to music, take
-          quizzes and discover something fun every day.
-        </p>
-
-        <button class="main-btn" onclick="go('games')">
-          🚀 Start Exploring
-        </button>
-      </div>
-
-      <section>
-        <h2 class="title">✨ Explore FUNZONE</h2>
-
-        <div class="grid">
-          <div class="card">
-            <div class="emoji">🎮</div>
-            <h3>Games</h3>
-            <p>Play fun mini games.</p>
-            <button onclick="go('games')">Play</button>
-          </div>
-
-          <div class="card">
-            <div class="emoji">🎵</div>
-            <h3>Music</h3>
-            <p>Enjoy your mini music player.</p>
-            <button onclick="go('music')">Listen</button>
-          </div>
-
-          <div class="card">
-            <div class="emoji">🧠</div>
-            <h3>Quiz</h3>
-            <p>Test your knowledge.</p>
-            <button onclick="go('quiz')">Start</button>
-          </div>
-
-          <div class="card">
-            <div class="emoji">😂</div>
-            <h3>Funny</h3>
-            <p>Take a little laugh.</p>
-            <button onclick="go('funny')">Laugh</button>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <!-- GAMES -->
-
-    <section id="games">
-      <h2 class="title">🎮 Mini Games</h2>
-
-      <div class="grid">
-        <div class="card">
-          <div class="emoji">❌⭕</div>
-          <h3>Tic Tac Toe</h3>
-          <p>Coming soon...</p>
-          <button onclick="ticTac()">Play</button>
-        </div>
-
-        <div class="card">
-          <div class="emoji">🎯</div>
-          <h3>Reaction Test</h3>
-          <p>Click the button as quickly as possible.</p>
-          <button onclick="reaction()">Start</button>
-        </div>
-
-        <div class="card">
-          <div class="emoji">🎲</div>
-          <h3>Lucky Dice</h3>
-          <p>Roll the dice.</p>
-          <button onclick="dice()">🎲 Roll</button>
-        </div>
-
-        <div class="card">
-          <div class="emoji">🪙</div>
-          <h3>Coin Flip</h3>
-          <p>Heads or tails?</p>
-          <button onclick="coin()">Flip</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- MUSIC -->
-
-    <section id="music">
-      <h2 class="title">🎵 Music Zone</h2>
-
-      <div class="player">
-        <div class="album">🎧</div>
-
-        <h3 id="song">FUNZONE MUSIC</h3>
-
-        <p id="musicStatus">Press play to start</p>
-
-        <div class="music-controls">
-          <button onclick="previous()">⏮</button>
-          <button onclick="playMusic()">▶️</button>
-          <button onclick="pauseMusic()">⏸</button>
-          <button onclick="next()">⏭</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- QUIZ -->
-
-    <section id="quiz">
-      <h2 class="title">🧠 Quiz Challenge</h2>
-
-      <div class="quiz">
-        <div id="question" class="question"></div>
-
-        <div id="answers"></div>
-
-        <p id="score"></p>
-      </div>
-    </section>
-
-    <!-- FUNNY -->
-
-    <section id="funny">
-      <h2 class="title">😂 Funny Zone</h2>
-
-      <div class="grid">
-        <div class="card">
-          <div class="emoji">😂</div>
-          <h3>Joke #1</h3>
-          <p>Why did the computer go to the doctor?</p>
-          <button onclick="alert('Because it had a virus! 😂')">Answer</button>
-        </div>
-
-        <div class="card">
-          <div class="emoji">🤣</div>
-          <h3>Joke #2</h3>
-          <p>What does a computer eat?</p>
-          <button onclick="alert('Microchips! 🤣')">Answer</button>
-        </div>
-
-        <div class="card">
-          <div class="emoji">😎</div>
-          <h3>Joke #3</h3>
-          <p>Why was the phone wearing glasses?</p>
-          <button onclick="alert('Because it lost its contacts! 😂')">
-            Answer
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- GALLERY -->
-
-    <section id="gallery">
-      <h2 class="title">🎨 Gallery</h2>
-
-      <div class="gallery">
-        <div class="photo">🌌</div>
-        <div class="photo">🚀</div>
-        <div class="photo">🎮</div>
-        <div class="photo">🎵</div>
-        <div class="photo">🌈</div>
-        <div class="photo">🔥</div>
-      </div>
-    </section>
-
-    <!-- SEARCH -->
-
-    <section>
-      <h2 class="title">🔎 Search FUNZONE</h2>
-
-      <div class="search-box">
-        <input id="search" placeholder="Search something..." />
-
-        <button onclick="searchFun()">🔎</button>
-      </div>
-    </section>
-
-    <footer>
-      🎪 FUNZONE © 2026
-      <br /><br />
-      Made with ❤️ using HTML, CSS & JavaScript
-    </footer>
-
-    <script>
-      /* NAVIGATION */
-
-      function go(id) {
-        document.getElementById(id).scrollIntoView({
-          behavior: "smooth",
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUNZONE V2 🎪</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#080812;
+    color:#fff;
+    transition:.3s;
+    overflow-x:hidden;
+}
+
+body.light{
+    background:#f4f5fb;
+    color:#151525;
+}
+
+header{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:72px;
+    z-index:999;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 5%;
+    background:rgba(8,8,18,.85);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.light header{
+    background:rgba(255,255,255,.88);
+    border-bottom:1px solid #ddd;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:900;
+    letter-spacing:1px;
+    color:#00eaff;
+    cursor:pointer;
+}
+
+.logo span{
+    color:#ff3cac;
+}
+
+nav{
+    display:flex;
+    gap:5px;
+}
+
+nav button{
+    background:none;
+    border:0;
+    color:#ddd;
+    padding:10px 13px;
+    cursor:pointer;
+    border-radius:12px;
+    transition:.2s;
+}
+
+.light nav button{
+    color:#333;
+}
+
+nav button:hover{
+    background:#00eaff22;
+    color:#00eaff;
+}
+
+.header-buttons{
+    display:flex;
+    gap:8px;
+}
+
+.circle{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    border:1px solid #ffffff22;
+    background:#18182c;
+    color:white;
+    cursor:pointer;
+}
+
+.light .circle{
+    background:white;
+    color:#111;
+}
+
+.hero{
+    min-height:100vh;
+    padding:120px 7% 70px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+    background:
+    radial-gradient(circle at 20% 20%,#ff3cac35,transparent 28%),
+    radial-gradient(circle at 80% 30%,#00eaff35,transparent 30%),
+    radial-gradient(circle at 50% 90%,#7b2cff25,transparent 30%),
+    #080812;
+}
+
+.light .hero{
+    background:
+    radial-gradient(circle at 20% 20%,#ff3cac18,transparent 28%),
+    radial-gradient(circle at 80% 30%,#00eaff18,transparent 30%),
+    #f4f5fb;
+}
+
+.hero-content{
+    max-width:850px;
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-block;
+    padding:8px 16px;
+    border:1px solid #00eaff55;
+    background:#00eaff12;
+    border-radius:30px;
+    color:#00eaff;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    font-size:clamp(45px,8vw,90px);
+    line-height:1;
+    margin-bottom:25px;
+}
+
+.gradient{
+    background:linear-gradient(90deg,#00eaff,#7b2cff,#ff3cac);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.hero p{
+    color:#aaa;
+    font-size:19px;
+    line-height:1.7;
+    max-width:700px;
+    margin:auto;
+}
+
+.main-btn{
+    margin-top:30px;
+    padding:15px 28px;
+    border:0;
+    border-radius:30px;
+    font-weight:bold;
+    cursor:pointer;
+    background:linear-gradient(90deg,#00eaff,#7b2cff);
+    color:#fff;
+    transition:.3s;
+}
+
+.main-btn:hover{
+    transform:translateY(-4px) scale(1.04);
+    box-shadow:0 10px 35px #00eaff33;
+}
+
+.floating{
+    position:absolute;
+    font-size:35px;
+    opacity:.3;
+    animation:float 5s infinite ease-in-out;
+}
+
+.f1{left:10%;top:25%}
+.f2{right:10%;top:25%;animation-delay:1s}
+.f3{left:15%;bottom:20%;animation-delay:2s}
+.f4{right:15%;bottom:20%;animation-delay:3s}
+
+@keyframes float{
+    0%,100%{transform:translateY(0) rotate(0)}
+    50%{transform:translateY(-25px) rotate(10deg)}
+}
+
+section{
+    padding:90px 7%;
+}
+
+.section-title{
+    text-align:center;
+    font-size:38px;
+    margin-bottom:45px;
+}
+
+.section-title span{
+    color:#00eaff;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:22px;
+}
+
+.card{
+    background:#131326;
+    border:1px solid #ffffff0c;
+    border-radius:22px;
+    padding:28px;
+    transition:.3s;
+    position:relative;
+    overflow:hidden;
+}
+
+.light .card{
+    background:#fff;
+    border:1px solid #ddd;
+    box-shadow:0 8px 25px #0000000c;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    border-color:#00eaff66;
+    box-shadow:0 15px 40px #00eaff12;
+}
+
+.card-icon{
+    font-size:50px;
+    margin-bottom:18px;
+}
+
+.card h3{
+    font-size:21px;
+    margin-bottom:10px;
+}
+
+.card p{
+    color:#999;
+    line-height:1.6;
+}
+
+.card-btn{
+    margin-top:18px;
+    padding:10px 18px;
+    border:0;
+    border-radius:20px;
+    background:#24243e;
+    color:white;
+    cursor:pointer;
+}
+
+.light .card-btn{
+    background:#eee;
+    color:#111;
+}
+
+.favorite{
+    position:absolute;
+    top:15px;
+    right:15px;
+    border:0;
+    background:none;
+    font-size:22px;
+    cursor:pointer;
+    filter:grayscale(1);
+}
+
+.favorite.active{
+    filter:none;
+}
+
+.search-container{
+    max-width:700px;
+    margin:0 auto 40px;
+    display:flex;
+}
+
+.search-container input{
+    flex:1;
+    padding:16px 20px;
+    border:0;
+    outline:0;
+    border-radius:30px 0 0 30px;
+    background:#17172d;
+    color:white;
+    font-size:16px;
+}
+
+.light .search-container input{
+    background:white;
+    color:#111;
+    border:1px solid #ddd;
+}
+
+.search-container button{
+    width:60px;
+    border:0;
+    border-radius:0 30px 30px 0;
+    background:#00eaff;
+    cursor:pointer;
+}
+
+/* GAMES */
+
+.game-box{
+    max-width:650px;
+    margin:auto;
+    padding:35px;
+    background:#131326;
+    border-radius:25px;
+    text-align:center;
+    border:1px solid #ffffff0c;
+}
+
+.light .game-box{
+    background:white;
+    border:1px solid #ddd;
+}
+
+.game-number{
+    font-size:50px;
+    margin:20px;
+}
+
+.game-input{
+    padding:14px;
+    border:0;
+    outline:0;
+    border-radius:12px;
+    background:#24243e;
+    color:white;
+    width:180px;
+    text-align:center;
+    font-size:18px;
+}
+
+.light .game-input{
+    background:#eee;
+    color:#111;
+}
+
+.choices{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+
+.choice{
+    padding:16px 22px;
+    border:0;
+    border-radius:18px;
+    background:#24243e;
+    color:white;
+    cursor:pointer;
+    font-size:25px;
+}
+
+.light .choice{
+    background:#eee;
+    color:#111;
+}
+
+/* QUIZ */
+
+.quiz-box{
+    max-width:700px;
+    margin:auto;
+    background:#131326;
+    padding:35px;
+    border-radius:25px;
+}
+
+.light .quiz-box{
+    background:white;
+}
+
+.question{
+    font-size:22px;
+    line-height:1.5;
+    margin-bottom:20px;
+}
+
+.answer{
+    width:100%;
+    text-align:left;
+    padding:15px;
+    margin:8px 0;
+    border:0;
+    border-radius:13px;
+    background:#24243e;
+    color:white;
+    cursor:pointer;
+}
+
+.answer:hover{
+    background:#00eaff;
+    color:#000;
+}
+
+.progress{
+    height:8px;
+    background:#25253d;
+    border-radius:10px;
+    margin-bottom:25px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    height:100%;
+    background:linear-gradient(90deg,#00eaff,#ff3cac);
+    width:0;
+}
+
+/* MUSIC */
+
+.music-player{
+    max-width:550px;
+    margin:auto;
+    text-align:center;
+    background:#131326;
+    border-radius:30px;
+    padding:35px;
+}
+
+.light .music-player{
+    background:white;
+    box-shadow:0 10px 30px #0001;
+}
+
+.album{
+    width:180px;
+    height:180px;
+    margin:auto;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:65px;
+    background:linear-gradient(135deg,#00eaff,#7b2cff,#ff3cac);
+    box-shadow:0 0 50px #7b2cff33;
+}
+
+.album.playing{
+    animation:spin 5s linear infinite;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg)}
+}
+
+.music-player h3{
+    margin:25px 0 8px;
+}
+
+.music-status{
+    color:#999;
+}
+
+.music-controls{
+    margin-top:25px;
+}
+
+.music-controls button{
+    width:48px;
+    height:48px;
+    margin:5px;
+    border:0;
+    border-radius:50%;
+    cursor:pointer;
+}
+
+/* FUNNY */
+
+.joke{
+    font-size:40px;
+    margin-bottom:15px;
+}
+
+/* FOOTER */
+
+footer{
+    padding:45px 20px;
+    text-align:center;
+    background:#05050c;
+    color:#777;
+}
+
+.light footer{
+    background:#e9eaf1;
+}
+
+/* MOBILE */
+
+@media(max-width:850px){
+
+    nav{
+        display:none;
+    }
+
+    header{
+        padding:0 4%;
+    }
+
+    .hero{
+        min-height:90vh;
+    }
+
+    section{
+        padding:65px 5%;
+    }
+
+    .section-title{
+        font-size:30px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo" onclick="go('home')">
+🎪 FUN<span>ZONE</span>
+</div>
+
+<nav>
+<button onclick="go('home')">🏠 Home</button>
+<button onclick="go('games')">🎮 Games</button>
+<button onclick="go('music')">🎵 Music</button>
+<button onclick="go('quiz')">🧠 Quiz</button>
+<button onclick="go('funny')">😂 Funny</button>
+</nav>
+
+<div class="header-buttons">
+<button class="circle" onclick="changeLanguage()">🌍</button>
+<button class="circle" onclick="toggleTheme()" id="theme">🌙</button>
+</div>
+
+</header>
+
+
+<!-- HOME -->
+
+<section class="hero" id="home">
+
+<div class="floating f1">🎮</div>
+<div class="floating f2">🎵</div>
+<div class="floating f3">🚀</div>
+<div class="floating f4">⭐</div>
+
+<div class="hero-content">
+
+<div class="badge">✨ FUNZONE V2</div>
+
+<h1>
+Your World of
+<br>
+<span class="gradient">Entertainment</span>
+</h1>
+
+<p id="heroText">
+Games, music, quizzes, jokes and much more.
+Everything in one small entertainment world.
+</p>
+
+<button class="main-btn" onclick="go('explore')">
+🚀 Explore FUNZONE
+</button>
+
+</div>
+
+</section>
+
+
+<!-- EXPLORE -->
+
+<section id="explore">
+
+<h2 class="section-title">
+✨ Explore <span>FUNZONE</span>
+</h2>
+
+<div class="search-container">
+
+<input
+id="search"
+placeholder="🔎 Search: games, music, quiz..."
+onkeyup="searchCards()">
+
+<button>🔎</button>
+
+</div>
+
+<div class="grid" id="cards">
+
+<div class="card" data-name="games">
+
+<button class="favorite" onclick="favorite(this)">⭐</button>
+
+<div class="card-icon">🎮</div>
+
+<h3>Games</h3>
+
+<p>
+Play mini games and challenge yourself.
+</p>
+
+<button class="card-btn" onclick="go('games')">
+Play Now
+</button>
+
+</div>
+
+
+<div class="card" data-name="music">
+
+<button class="favorite" onclick="favorite(this)">⭐</button>
+
+<div class="card-icon">🎵</div>
+
+<h3>Music</h3>
+
+<p>
+Enjoy your personal mini music zone.
+</p>
+
+<button class="card-btn" onclick="go('music')">
+Listen
+</button>
+
+</div>
+
+
+<div class="card" data-name="quiz">
+
+<button class="favorite" onclick="favorite(this)">⭐</button>
+
+<div class="card-icon">🧠</div>
+
+<h3>Quiz</h3>
+
+<p>
+Test your knowledge and collect points.
+</p>
+
+<button class="card-btn" onclick="go('quiz')">
+Start Quiz
+</button>
+
+</div>
+
+
+<div class="card" data-name="funny">
+
+<button class="favorite" onclick="favorite(this)">⭐</button>
+
+<div class="card-icon">😂</div>
+
+<h3>Funny</h3>
+
+<p>
+Need a laugh? Discover some jokes.
+</p>
+
+<button class="card-btn" onclick="go('funny')">
+Laugh
+</button>
+
+</div>
+
+
+<div class="card" data-name="gallery">
+
+<button class="favorite" onclick="favorite(this)">⭐</button>
+
+<div class="card-icon">🎨</div>
+
+<h3>Gallery</h3>
+
+<p>
+Discover a colorful visual world.
+</p>
+
+<button class="card-btn" onclick="go('gallery')">
+Open
+</button>
+
+</div>
+
+
+<div class="card" data-name="favorites">
+
+<button class="favorite" onclick="favorite(this)">⭐</button>
+
+<div class="card-icon">💖</div>
+
+<h3>Favorites</h3>
+
+<p>
+Save your favorite parts of FUNZONE.
+</p>
+
+<button class="card-btn" onclick="showFavorites()">
+View
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- GAMES -->
+
+<section id="games">
+
+<h2 class="section-title">
+🎮 <span>Games</span>
+</h2>
+
+<div class="grid">
+
+<div class="game-box">
+
+<h3>🔢 Guess the Number</h3>
+
+<p style="margin:15px;color:#999">
+I'm thinking of a number from 1 to 20.
+</p>
+
+<div class="game-number">❓</div>
+
+<input
+id="guessInput"
+class="game-input"
+type="number"
+min="1"
+max="20"
+placeholder="1 - 20">
+
+<br>
+
+<button class="main-btn" onclick="guessNumber()">
+Guess
+</button>
+
+<p id="guessResult" style="margin-top:20px"></p>
+
+</div>
+
+
+<div class="game-box">
+
+<h3>✊ Rock Paper Scissors</h3>
+
+<p style="margin:15px;color:#999">
+Choose your weapon!
+</p>
+
+<div class="choices">
+
+<button class="choice" onclick="rps('rock')">✊</button>
+
+<button class="choice" onclick="rps('paper')">✋</button>
+
+<button class="choice" onclick="rps('scissors')">✌️</button>
+
+</div>
+
+<p id="rpsResult" style="margin-top:25px"></p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- MUSIC -->
+
+<section id="music">
+
+<h2 class="section-title">
+🎵 <span>Music Zone</span>
+</h2>
+
+<div class="music-player">
+
+<div class="album" id="album">
+🎧
+</div>
+
+<h3 id="songName">FUNZONE MUSIC</h3>
+
+<p class="music-status" id="musicStatus">
+Ready to play
+</p>
+
+<div class="music-controls">
+
+<button onclick="previousSong()">⏮</button>
+
+<button onclick="playMusic()">▶️</button>
+
+<button onclick="pauseMusic()">⏸</button>
+
+<button onclick="nextSong()">⏭</button>
+
+</div>
+
+<p style="margin-top:20px;color:#777;font-size:13px">
+This demo player controls the interface.
+You can add your own audio files later.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- QUIZ -->
+
+<section id="quiz">
+
+<h2 class="section-title">
+🧠 <span>Quiz Challenge</span>
+</h2>
+
+<div class="quiz-box">
+
+<div class="progress">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div id="quizQuestion" class="question"></div>
+
+<div id="quizAnswers"></div>
+
+<p id="quizScore" style="margin-top:20px;color:#00eaff"></p>
+
+</div>
+
+</section>
+
+
+<!-- FUNNY -->
+
+<section id="funny">
+
+<h2 class="section-title">
+😂 <span>Funny Zone</span>
+</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<div class="joke">😂</div>
+
+<h3>Computer Joke</h3>
+
+<p>
+Why did the computer go to the doctor?
+</p>
+
+<button class="card-btn"
+onclick="tellJoke('Because it had a virus! 🦠😂')">
+Answer
+</button>
+
+</div>
+
+
+<div class="card">
+
+<div class="joke">🤣</div>
+
+<h3>Phone Joke</h3>
+
+<p>
+Why did the phone wear glasses?
+</p>
+
+<button class="card-btn"
+onclick="tellJoke('Because it lost its contacts! 🤣')">
+Answer
+</button>
+
+</div>
+
+
+<div class="card">
+
+<div class="joke">😎</div>
+
+<h3>Developer Joke</h3>
+
+<p>
+Why do programmers love dark mode?
+</p>
+
+<button class="card-btn"
+onclick="tellJoke('Because light attracts bugs! 🐛😂')">
+Answer
+</button>
+
+</div>
+
+</div>
+
+<br>
+
+<div style="text-align:center">
+
+<button class="main-btn" onclick="randomJoke()">
+🎲 Random Joke
+</button>
+
+</div>
+
+</section>
+
+
+<!-- GALLERY -->
+
+<section id="gallery">
+
+<h2 class="section-title">
+🎨 <span>Gallery</span>
+</h2>
+
+<div class="grid">
+
+<div class="card" style="text-align:center">
+<div class="card-icon">🌌</div>
+<h3>Galaxy</h3>
+<p>Explore the universe.</p>
+</div>
+
+<div class="card" style="text-align:center">
+<div class="card-icon">🚀</div>
+<h3>Space</h3>
+<p>Go beyond the stars.</p>
+</div>
+
+<div class="card" style="text-align:center">
+<div class="card-icon">🌈</div>
+<h3>Colors</h3>
+<p>A colorful world.</p>
+</div>
+
+<div class="card" style="text-align:center">
+<div class="card-icon">🔥</div>
+<h3>Energy</h3>
+<p>Keep the FUNZONE alive.</p>
+</div>
+
+</div>
+
+</section>
+
+
+<footer>
+
+<div style="font-size:25px;margin-bottom:15px">
+🎪 FUNZONE
+</div>
+
+<p>
+Entertainment • Games • Music • Quiz • Funny
+</p>
+
+<p style="margin-top:15px">
+© 2026 FUNZONE — Made with ❤️
+</p>
+
+</footer>
+
+
+<script>
+
+/* NAVIGATION */
+
+function go(id){
+
+    const element=document.getElementById(id);
+
+    if(element){
+
+        element.scrollIntoView({
+            behavior:"smooth"
         });
-      }
 
-      /* DARK / LIGHT */
+    }
 
-      function toggleTheme() {
-        document.body.classList.toggle("light");
-      }
+}
 
-      /* DICE */
 
-      function dice() {
-        let number = Math.floor(Math.random() * 6) + 1;
+/* THEME */
 
-        alert("🎲 You rolled: " + number);
-      }
+function toggleTheme(){
 
-      /* COIN */
+    document.body.classList.toggle("light");
 
-      function coin() {
-        let result = Math.random() < 0.5 ? "HEADS 🪙" : "TAILS 🪙";
+    const light=document.body.classList.contains("light");
 
-        alert(result);
-      }
+    document.getElementById("theme").textContent=
+    light ? "☀️" : "🌙";
 
-      /* REACTION */
+    localStorage.setItem("funzoneTheme",light);
 
-      function reaction() {
-        alert("Get ready...");
+}
 
-        setTimeout(() => {
-          let start = Date.now();
+if(localStorage.getItem("funzoneTheme")==="true"){
 
-          alert("CLICK OK!");
+    document.body.classList.add("light");
 
-          let time = Date.now() - start;
+    document.getElementById("theme").textContent="☀️";
 
-          alert("⚡ Reaction time: " + time + " ms");
-        }, Math.random() * 3000 + 1000);
-      }
+}
 
-      /* TIC TAC */
 
-      function ticTac() {
-        let choice = prompt("Choose your symbol:\n\n1 = ❌\n2 = ⭕");
+/* SEARCH */
 
-        if (choice == "1") alert("You chose ❌. Game started!");
-        else if (choice == "2") alert("You chose ⭕. Game started!");
-        else alert("Invalid choice.");
-      }
+function searchCards(){
 
-      /* MUSIC */
+    const value=
+    document.getElementById("search")
+    .value
+    .toLowerCase();
 
-      let musicPlaying = false;
+    document.querySelectorAll(".card").forEach(card=>{
 
-      function playMusic() {
-        musicPlaying = true;
+        const name=card.dataset.name || "";
 
-        document.getElementById("musicStatus").innerText =
-          "▶️ Music playing...";
-      }
+        card.style.display=
+        name.includes(value) || value===""
+        ? "block"
+        : "none";
 
-      function pauseMusic() {
-        musicPlaying = false;
+    });
 
-        document.getElementById("musicStatus").innerText = "⏸ Music paused";
-      }
+}
 
-      function next() {
-        document.getElementById("song").innerText = "🎵 Next Song";
-      }
 
-      function previous() {
-        document.getElementById("song").innerText = "🎵 Previous Song";
-      }
+/* FAVORITES */
 
-      /* QUIZ */
+function favorite(button){
 
-      const questions = [
-        {
-          q: "🌍 What is the capital of France?",
-          a: ["Paris", "London", "Madrid", "Rome"],
-          correct: 0,
-        },
+    button.classList.toggle("active");
 
-        {
-          q: "💻 What language is used to style websites?",
-          a: ["HTML", "CSS", "Python", "SQL"],
-          correct: 1,
-        },
+    const active=
+    button.classList.contains("active");
 
-        {
-          q: "🎮 Which company created PlayStation?",
-          a: ["Microsoft", "Sony", "Nintendo", "Apple"],
-          correct: 1,
-        },
+    button.textContent=
+    active ? "❤️" : "⭐";
 
-        {
-          q: "🚀 Which planet is known as the Red Planet?",
-          a: ["Earth", "Mars", "Jupiter", "Venus"],
-          correct: 1,
-        },
-      ];
+}
 
-      let current = 0;
-      let points = 0;
 
-      function loadQuiz() {
-        if (current >= questions.length) {
-          document.getElementById("question").innerText = "🏆 Quiz Finished!";
+/* FAVORITES MESSAGE */
 
-          document.getElementById(
-            "answers"
-          ).innerHTML = `<button class="main-btn" onclick="restartQuiz()">
+function showFavorites(){
+
+    alert(
+    "❤️ Your Favorites\n\n" +
+    "You can save FUNZONE sections by pressing ⭐."
+    );
+
+}
+
+
+/* GUESS NUMBER */
+
+let secretNumber=
+Math.floor(Math.random()*20)+1;
+
+function guessNumber(){
+
+    const input=
+    Number(document.getElementById("guessInput").value);
+
+    const result=
+    document.getElementById("guessResult");
+
+    if(!input || input<1 || input>20){
+
+        result.textContent=
+        "⚠️ Enter a number between 1 and 20.";
+
+        return;
+    }
+
+    if(input===secretNumber){
+
+        result.textContent=
+        "🎉 AMAZING! You found it!";
+
+        secretNumber=
+        Math.floor(Math.random()*20)+1;
+
+    }
+
+    else if(input<secretNumber){
+
+        result.textContent=
+        "⬆️ Try a higher number!";
+
+    }
+
+    else{
+
+        result.textContent=
+        "⬇️ Try a lower number!";
+
+    }
+
+}
+
+
+/* ROCK PAPER SCISSORS */
+
+function rps(player){
+
+    const options=[
+        "rock",
+        "paper",
+        "scissors"
+    ];
+
+    const computer=
+    options[Math.floor(Math.random()*3)];
+
+    let result="";
+
+    if(player===computer){
+
+        result="🤝 Draw!";
+
+    }
+
+    else if(
+        (player==="rock" && computer==="scissors") ||
+        (player==="paper" && computer==="rock") ||
+        (player==="scissors" && computer==="paper")
+    ){
+
+        result=
+        "🎉 You win! Computer chose "+computer;
+
+    }
+
+    else{
+
+        result=
+        "😅 You lose! Computer chose "+computer;
+
+    }
+
+    document.getElementById("rpsResult").textContent=result;
+
+}
+
+
+/* MUSIC */
+
+let songs=[
+    "FUNZONE MUSIC",
+    "SUMMER VIBES",
+    "NIGHT DRIVE",
+    "DREAM WORLD"
+];
+
+let songIndex=0;
+
+function updateSong(){
+
+    document.getElementById("songName")
+    .textContent=songs[songIndex];
+
+}
+
+function playMusic(){
+
+    document.getElementById("musicStatus")
+    .textContent="▶️ Playing...";
+
+    document.getElementById("album")
+    .classList.add("playing");
+
+}
+
+function pauseMusic(){
+
+    document.getElementById("musicStatus")
+    .textContent="⏸ Paused";
+
+    document.getElementById("album")
+    .classList.remove("playing");
+
+}
+
+function nextSong(){
+
+    songIndex++;
+
+    if(songIndex>=songs.length)
+        songIndex=0;
+
+    updateSong();
+
+}
+
+function previousSong(){
+
+    songIndex--;
+
+    if(songIndex<0)
+        songIndex=songs.length-1;
+
+    updateSong();
+
+}
+
+
+/* QUIZ */
+
+const quizData=[
+
+{
+question:"🌍 What is the capital of France?",
+answers:["Paris","London","Rome","Madrid"],
+correct:0
+},
+
+{
+question:"💻 Which language styles a webpage?",
+answers:["HTML","CSS","Python","SQL"],
+correct:1
+},
+
+{
+question:"🚀 Which planet is known as the Red Planet?",
+answers:["Venus","Earth","Mars","Jupiter"],
+correct:2
+},
+
+{
+question:"🎮 Which company created PlayStation?",
+answers:["Sony","Microsoft","Apple","Google"],
+correct:0
+},
+
+{
+question:"🌊 Which is the largest ocean?",
+answers:["Atlantic","Indian","Pacific","Arctic"],
+correct:2
+},
+
+{
+question:"🧠 How many days are there in a week?",
+answers:["5","6","7","8"],
+correct:2
+}
+
+];
+
+let quizIndex=0;
+let quizPoints=0;
+
+function loadQuiz(){
+
+    if(quizIndex>=quizData.length){
+
+        document.getElementById("quizQuestion")
+        .textContent="🏆 Quiz Finished!";
+
+        document.getElementById("quizAnswers")
+        .innerHTML=
+        `<button class="main-btn" onclick="restartQuiz()">
         🔄 Play Again
         </button>`;
 
-          document.getElementById("score").innerText =
-            "Your score: " + points + " / " + questions.length;
+        document.getElementById("quizScore")
+        .textContent=
+        "Final score: "+quizPoints+" / "+quizData.length;
 
-          return;
-        }
+        return;
 
-        let q = questions[current];
+    }
 
-        document.getElementById("question").innerText = q.q;
+    const data=quizData[quizIndex];
 
-        let html = "";
+    document.getElementById("quizQuestion")
+    .textContent=data.question;
 
-        q.a.forEach((answer, index) => {
-          html += `
-        <button class="answer"
-        onclick="answer(${index})">
-        ${answer}
-        </button>
-        `;
-        });
+    const answers=
+    document.getElementById("quizAnswers");
 
-        document.getElementById("answers").innerHTML = html;
+    answers.innerHTML="";
 
-        document.getElementById("score").innerText = "Score: " + points;
-      }
+    data.answers.forEach((answer,index)=>{
 
-      function answer(index) {
-        if (index === questions[current].correct) {
-          points++;
+        const button=
+        document.createElement("button");
 
-          alert("✅ Correct!");
-        } else {
-          alert("❌ Wrong!");
-        }
+        button.className="answer";
 
-        current++;
+        button.textContent=answer;
 
-        loadQuiz();
-      }
+        button.onclick=()=>checkAnswer(index);
 
-      function restartQuiz() {
-        current = 0;
-        points = 0;
+        answers.appendChild(button);
 
-        loadQuiz();
-      }
+    });
 
-      loadQuiz();
+    document.getElementById("quizScore")
+    .textContent=
+    "Score: "+quizPoints;
 
-      /* SEARCH */
+    const percentage=
+    (quizIndex/quizData.length)*100;
 
-      function searchFun() {
-        let text = document.getElementById("search").value.toLowerCase();
+    document.getElementById("progressBar")
+    .style.width=percentage+"%";
 
-        if (text.includes("game")) go("games");
-        else if (text.includes("music")) go("music");
-        else if (text.includes("quiz")) go("quiz");
-        else if (text.includes("funny")) go("funny");
-        else alert("🔎 No result found.");
-      }
-    </script>
-  </body>
+}
+
+function checkAnswer(index){
+
+    if(index===quizData[quizIndex].correct){
+
+        quizPoints++;
+
+        alert("✅ Correct!");
+
+    }
+
+    else{
+
+        alert("❌ Wrong answer!");
+
+    }
+
+    quizIndex++;
+
+    loadQuiz();
+
+}
+
+function restartQuiz(){
+
+    quizIndex=0;
+    quizPoints=0;
+
+    loadQuiz();
+
+}
+
+loadQuiz();
+
+
+/* JOKES */
+
+function tellJoke(text){
+
+    alert(text);
+
+}
+
+const jokes=[
+
+"😂 Why did the computer go to the doctor? Because it had a virus!",
+
+"🤣 What does a computer eat? Microchips!",
+
+"😎 Why do programmers love dark mode? Because light attracts bugs!",
+
+"😂 Why was the smartphone cold? It left its Windows open!"
+
+];
+
+function randomJoke(){
+
+    const joke=
+    jokes[Math.floor(Math.random()*jokes.length)];
+
+    alert(joke);
+
+}
+
+
+/* LANGUAGE */
+
+let languages=[
+    "🌍 English",
+    "🌍 Français",
+    "🌍 العربية"
+];
+
+let languageIndex=0;
+
+function changeLanguage(){
+
+    languageIndex++;
+
+    if(languageIndex>=languages.length)
+        languageIndex=0;
+
+    const language=languages[languageIndex];
+
+    alert(
+        "🌍 Language selected: "+language+
+        "\n\nFull multilingual content can be added in the next version!"
+    );
+
+}
+
+</script>
+
+</body>
 </html>
