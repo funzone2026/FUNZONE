@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FUNZONE 🎪</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background: #0b0b16;
+        color: white;
+        transition: 0.3s;
+      }
+
+      body.light {
+        background: #f4f4f8;
+        color: #111;
+      }
+
+      header {
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 6%;
+        background: #121225;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 3px 20px #0005;
+      }
+
+      .logo {
+        font-size: 25px;
+        font-weight: bold;
+        color: #00eaff;
+      }
+
+      nav {
+        display: flex;
+        gap: 10px;
+      }
+
+      nav button {
+        background: none;
+        border: 0;
+        color: white;
+        padding: 10px;
+        cursor: pointer;
+      }
+
+      .light header,
+      .light nav button {
+        color: #111;
+      }
+
+      nav button:hover {
+        color: #00eaff;
+      }
+
+      .controls {
+        display: flex;
+        gap: 8px;
+      }
+
+      .icon-btn {
+        border: 0;
+        background: #242442;
+        color: white;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+      }
+
+      .hero {
+        min-height: 430px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 40px 20px;
+        background: radial-gradient(
+            circle at 20% 20%,
+            #7928ca55,
+            transparent 30%
+          ),
+          radial-gradient(circle at 80% 30%, #00eaff44, transparent 30%),
+          linear-gradient(135deg, #0d0d20, #151530);
+      }
+
+      .hero h1 {
+        font-size: 65px;
+        margin-bottom: 15px;
+      }
+
+      .hero h1 span {
+        color: #00eaff;
+      }
+
+      .hero p {
+        font-size: 19px;
+        color: #bbb;
+        max-width: 650px;
+        line-height: 1.6;
+      }
+
+      .main-btn {
+        margin-top: 25px;
+        padding: 15px 30px;
+        border: 0;
+        border-radius: 30px;
+        background: #00eaff;
+        color: #000;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .main-btn:hover {
+        transform: scale(1.08);
+        box-shadow: 0 0 30px #00eaff77;
+      }
+
+      section {
+        padding: 55px 7%;
+      }
+
+      .title {
+        text-align: center;
+        font-size: 35px;
+        margin-bottom: 35px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        gap: 20px;
+      }
+
+      .card {
+        background: #16162b;
+        padding: 25px;
+        border-radius: 20px;
+        text-align: center;
+        transition: 0.3s;
+        border: 1px solid #ffffff0d;
+      }
+
+      .light .card {
+        background: white;
+        box-shadow: 0 5px 20px #0001;
+      }
+
+      .card:hover {
+        transform: translateY(-8px);
+        border-color: #00eaff;
+      }
+
+      .card .emoji {
+        font-size: 50px;
+        margin-bottom: 15px;
+      }
+
+      .card h3 {
+        margin-bottom: 10px;
+      }
+
+      .card p {
+        color: #999;
+        line-height: 1.5;
+      }
+
+      .card button {
+        margin-top: 15px;
+        padding: 10px 20px;
+        border: 0;
+        border-radius: 20px;
+        background: #29294a;
+        color: white;
+        cursor: pointer;
+      }
+
+      .search-box {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto 35px;
+        display: flex;
+      }
+
+      .search-box input {
+        flex: 1;
+        padding: 15px 20px;
+        border: 0;
+        outline: 0;
+        border-radius: 30px 0 0 30px;
+        background: #22223b;
+        color: white;
+      }
+
+      .search-box button {
+        width: 60px;
+        border: 0;
+        background: #00eaff;
+        border-radius: 0 30px 30px 0;
+        cursor: pointer;
+      }
+
+      /* QUIZ */
+
+      .quiz {
+        max-width: 650px;
+        margin: auto;
+        background: #16162b;
+        padding: 30px;
+        border-radius: 25px;
+      }
+
+      .question {
+        font-size: 22px;
+        margin-bottom: 20px;
+      }
+
+      .answer {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        margin: 10px 0;
+        border: 0;
+        border-radius: 12px;
+        background: #252545;
+        color: white;
+        cursor: pointer;
+        text-align: left;
+      }
+
+      .answer:hover {
+        background: #00eaff;
+        color: #000;
+      }
+
+      /* MUSIC */
+
+      .player {
+        max-width: 600px;
+        margin: auto;
+        background: #16162b;
+        padding: 30px;
+        border-radius: 25px;
+        text-align: center;
+      }
+
+      .album {
+        width: 160px;
+        height: 160px;
+        margin: auto;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #00eaff, #7928ca);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 60px;
+      }
+
+      .player h3 {
+        margin: 20px;
+      }
+
+      .music-controls button {
+        margin: 5px;
+        width: 45px;
+        height: 45px;
+        border: 0;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      /* GALLERY */
+
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 15px;
+      }
+
+      .photo {
+        height: 180px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 60px;
+        background: linear-gradient(135deg, #7928ca, #00eaff);
+      }
+
+      /* FOOTER */
+
+      footer {
+        text-align: center;
+        padding: 40px;
+        background: #10101f;
+        color: #888;
+      }
+
+      @media (max-width: 800px) {
+        header {
+          padding: 0 3%;
+        }
+
+        nav {
+          display: none;
+        }
+
+        .hero h1 {
+          font-size: 43px;
+        }
+
+        section {
+          padding: 40px 5%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="logo">🎪 FUNZONE</div>
+
+      <nav>
+        <button onclick="go('home')">Home</button>
+        <button onclick="go('games')">Games</button>
+        <button onclick="go('music')">Music</button>
+        <button onclick="go('quiz')">Quiz</button>
+        <button onclick="go('funny')">Funny</button>
+      </nav>
+
+      <div class="controls">
+        <button class="icon-btn" onclick="toggleTheme()">🌙</button>
+      </div>
+    </header>
+
+    <!-- HOME -->
+
+    <div id="home">
+      <div class="hero">
+        <h1>Welcome to <span>FUNZONE</span> 🎪</h1>
+
+        <p>
+          Your small entertainment world. Play games, listen to music, take
+          quizzes and discover something fun every day.
+        </p>
+
+        <button class="main-btn" onclick="go('games')">
+          🚀 Start Exploring
+        </button>
+      </div>
+
+      <section>
+        <h2 class="title">✨ Explore FUNZONE</h2>
+
+        <div class="grid">
+          <div class="card">
+            <div class="emoji">🎮</div>
+            <h3>Games</h3>
+            <p>Play fun mini games.</p>
+            <button onclick="go('games')">Play</button>
+          </div>
+
+          <div class="card">
+            <div class="emoji">🎵</div>
+            <h3>Music</h3>
+            <p>Enjoy your mini music player.</p>
+            <button onclick="go('music')">Listen</button>
+          </div>
+
+          <div class="card">
+            <div class="emoji">🧠</div>
+            <h3>Quiz</h3>
+            <p>Test your knowledge.</p>
+            <button onclick="go('quiz')">Start</button>
+          </div>
+
+          <div class="card">
+            <div class="emoji">😂</div>
+            <h3>Funny</h3>
+            <p>Take a little laugh.</p>
+            <button onclick="go('funny')">Laugh</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- GAMES -->
+
+    <section id="games">
+      <h2 class="title">🎮 Mini Games</h2>
+
+      <div class="grid">
+        <div class="card">
+          <div class="emoji">❌⭕</div>
+          <h3>Tic Tac Toe</h3>
+          <p>Coming soon...</p>
+          <button onclick="ticTac()">Play</button>
+        </div>
+
+        <div class="card">
+          <div class="emoji">🎯</div>
+          <h3>Reaction Test</h3>
+          <p>Click the button as quickly as possible.</p>
+          <button onclick="reaction()">Start</button>
+        </div>
+
+        <div class="card">
+          <div class="emoji">🎲</div>
+          <h3>Lucky Dice</h3>
+          <p>Roll the dice.</p>
+          <button onclick="dice()">🎲 Roll</button>
+        </div>
+
+        <div class="card">
+          <div class="emoji">🪙</div>
+          <h3>Coin Flip</h3>
+          <p>Heads or tails?</p>
+          <button onclick="coin()">Flip</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MUSIC -->
+
+    <section id="music">
+      <h2 class="title">🎵 Music Zone</h2>
+
+      <div class="player">
+        <div class="album">🎧</div>
+
+        <h3 id="song">FUNZONE MUSIC</h3>
+
+        <p id="musicStatus">Press play to start</p>
+
+        <div class="music-controls">
+          <button onclick="previous()">⏮</button>
+          <button onclick="playMusic()">▶️</button>
+          <button onclick="pauseMusic()">⏸</button>
+          <button onclick="next()">⏭</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+
+    <section id="quiz">
+      <h2 class="title">🧠 Quiz Challenge</h2>
+
+      <div class="quiz">
+        <div id="question" class="question"></div>
+
+        <div id="answers"></div>
+
+        <p id="score"></p>
+      </div>
+    </section>
+
+    <!-- FUNNY -->
+
+    <section id="funny">
+      <h2 class="title">😂 Funny Zone</h2>
+
+      <div class="grid">
+        <div class="card">
+          <div class="emoji">😂</div>
+          <h3>Joke #1</h3>
+          <p>Why did the computer go to the doctor?</p>
+          <button onclick="alert('Because it had a virus! 😂')">Answer</button>
+        </div>
+
+        <div class="card">
+          <div class="emoji">🤣</div>
+          <h3>Joke #2</h3>
+          <p>What does a computer eat?</p>
+          <button onclick="alert('Microchips! 🤣')">Answer</button>
+        </div>
+
+        <div class="card">
+          <div class="emoji">😎</div>
+          <h3>Joke #3</h3>
+          <p>Why was the phone wearing glasses?</p>
+          <button onclick="alert('Because it lost its contacts! 😂')">
+            Answer
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+
+    <section id="gallery">
+      <h2 class="title">🎨 Gallery</h2>
+
+      <div class="gallery">
+        <div class="photo">🌌</div>
+        <div class="photo">🚀</div>
+        <div class="photo">🎮</div>
+        <div class="photo">🎵</div>
+        <div class="photo">🌈</div>
+        <div class="photo">🔥</div>
+      </div>
+    </section>
+
+    <!-- SEARCH -->
+
+    <section>
+      <h2 class="title">🔎 Search FUNZONE</h2>
+
+      <div class="search-box">
+        <input id="search" placeholder="Search something..." />
+
+        <button onclick="searchFun()">🔎</button>
+      </div>
+    </section>
+
+    <footer>
+      🎪 FUNZONE © 2026
+      <br /><br />
+      Made with ❤️ using HTML, CSS & JavaScript
+    </footer>
+
+    <script>
+      /* NAVIGATION */
+
+      function go(id) {
+        document.getElementById(id).scrollIntoView({
+          behavior: "smooth",
+        });
+      }
+
+      /* DARK / LIGHT */
+
+      function toggleTheme() {
+        document.body.classList.toggle("light");
+      }
+
+      /* DICE */
+
+      function dice() {
+        let number = Math.floor(Math.random() * 6) + 1;
+
+        alert("🎲 You rolled: " + number);
+      }
+
+      /* COIN */
+
+      function coin() {
+        let result = Math.random() < 0.5 ? "HEADS 🪙" : "TAILS 🪙";
+
+        alert(result);
+      }
+
+      /* REACTION */
+
+      function reaction() {
+        alert("Get ready...");
+
+        setTimeout(() => {
+          let start = Date.now();
+
+          alert("CLICK OK!");
+
+          let time = Date.now() - start;
+
+          alert("⚡ Reaction time: " + time + " ms");
+        }, Math.random() * 3000 + 1000);
+      }
+
+      /* TIC TAC */
+
+      function ticTac() {
+        let choice = prompt("Choose your symbol:\n\n1 = ❌\n2 = ⭕");
+
+        if (choice == "1") alert("You chose ❌. Game started!");
+        else if (choice == "2") alert("You chose ⭕. Game started!");
+        else alert("Invalid choice.");
+      }
+
+      /* MUSIC */
+
+      let musicPlaying = false;
+
+      function playMusic() {
+        musicPlaying = true;
+
+        document.getElementById("musicStatus").innerText =
+          "▶️ Music playing...";
+      }
+
+      function pauseMusic() {
+        musicPlaying = false;
+
+        document.getElementById("musicStatus").innerText = "⏸ Music paused";
+      }
+
+      function next() {
+        document.getElementById("song").innerText = "🎵 Next Song";
+      }
+
+      function previous() {
+        document.getElementById("song").innerText = "🎵 Previous Song";
+      }
+
+      /* QUIZ */
+
+      const questions = [
+        {
+          q: "🌍 What is the capital of France?",
+          a: ["Paris", "London", "Madrid", "Rome"],
+          correct: 0,
+        },
+
+        {
+          q: "💻 What language is used to style websites?",
+          a: ["HTML", "CSS", "Python", "SQL"],
+          correct: 1,
+        },
+
+        {
+          q: "🎮 Which company created PlayStation?",
+          a: ["Microsoft", "Sony", "Nintendo", "Apple"],
+          correct: 1,
+        },
+
+        {
+          q: "🚀 Which planet is known as the Red Planet?",
+          a: ["Earth", "Mars", "Jupiter", "Venus"],
+          correct: 1,
+        },
+      ];
+
+      let current = 0;
+      let points = 0;
+
+      function loadQuiz() {
+        if (current >= questions.length) {
+          document.getElementById("question").innerText = "🏆 Quiz Finished!";
+
+          document.getElementById(
+            "answers"
+          ).innerHTML = `<button class="main-btn" onclick="restartQuiz()">
+        🔄 Play Again
+        </button>`;
+
+          document.getElementById("score").innerText =
+            "Your score: " + points + " / " + questions.length;
+
+          return;
+        }
+
+        let q = questions[current];
+
+        document.getElementById("question").innerText = q.q;
+
+        let html = "";
+
+        q.a.forEach((answer, index) => {
+          html += `
+        <button class="answer"
+        onclick="answer(${index})">
+        ${answer}
+        </button>
+        `;
+        });
+
+        document.getElementById("answers").innerHTML = html;
+
+        document.getElementById("score").innerText = "Score: " + points;
+      }
+
+      function answer(index) {
+        if (index === questions[current].correct) {
+          points++;
+
+          alert("✅ Correct!");
+        } else {
+          alert("❌ Wrong!");
+        }
+
+        current++;
+
+        loadQuiz();
+      }
+
+      function restartQuiz() {
+        current = 0;
+        points = 0;
+
+        loadQuiz();
+      }
+
+      loadQuiz();
+
+      /* SEARCH */
+
+      function searchFun() {
+        let text = document.getElementById("search").value.toLowerCase();
+
+        if (text.includes("game")) go("games");
+        else if (text.includes("music")) go("music");
+        else if (text.includes("quiz")) go("quiz");
+        else if (text.includes("funny")) go("funny");
+        else alert("🔎 No result found.");
+      }
+    </script>
+  </body>
+</html>
